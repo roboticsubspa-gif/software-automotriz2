@@ -31,8 +31,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from reportlab.lib.pagesizes import A4
 import sys
+import traceback
 from dotenv import load_dotenv
 
+# override=False: en Render/Railway las variables del hosting no las pisa un .env del repo.
 load_dotenv(override=False)
 
 if sys.platform == "win32":
@@ -66,7 +68,7 @@ def operador_required(fn):
         return fn(*args, **kwargs)
 
     return wrapper
-import traceback
+
 
 app = Flask(__name__)
 
@@ -2165,7 +2167,6 @@ def vehiculos():
     <form method="GET" class="d-flex mb-3"><input name="q" class="form-control me-2" placeholder="Buscar por patente, modelo o dueño..." value="{q}"><button class="btn btn-secondary">Buscar</button></form>
     <table class="table table-striped datatable"><thead class="table-dark"><tr><th>ID</th><th>Patente</th><th>Modelo</th><th>Dueño</th><th>Foto</th><th>Acciones</th></tr></thead><tbody>
     """
-    lista: List[Vehiculo] = Vehiculo.query.order_by(Vehiculo.id).all()
 
     for v in lista:
         foto_td = f"<img src='{url_for('vehiculo_image', veh_id=v.id)}' class='thumb'>" if v.foto else "—"
