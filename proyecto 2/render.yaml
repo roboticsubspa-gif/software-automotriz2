@@ -1,0 +1,23 @@
+# Opcional: en Render → Blueprints → New Blueprint Instance → conecta este repo.
+# O crea un Web Service a mano con los mismos comandos que el Procfile.
+
+services:
+  - type: web
+    name: taller-flask
+    runtime: python
+    # free = prueba (duerme sin uso). starter = siempre activo (más rápido en uso).
+    plan: starter
+    # Elige en el panel la región más cercana a tu proyecto Supabase.
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 4 wsgi:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
