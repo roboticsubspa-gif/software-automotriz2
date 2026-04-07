@@ -33,7 +33,7 @@ from reportlab.lib.pagesizes import A4
 import sys
 from dotenv import load_dotenv
 
-load_dotenv(override=False))
+load_dotenv(override=False)
 
 if sys.platform == "win32":
     try:
